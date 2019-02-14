@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SearchQuery {
 
     private String id;
-   // private Timestamp dateTime;
+    // private Timestamp dateTime;
     private String domain;
     private String[] concepts;
 
