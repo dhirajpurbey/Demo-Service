@@ -17,6 +17,8 @@ public class GoogleApiSearchController {
 
     @PostMapping("search")
     public ResponseEntity<?> getByName(@RequestBody SearchQuery searchQuery) {
+        System.out.println(searchQuery.getDomain());
+
         return new ResponseEntity<SearchResultDoc>(googleApiSearchService.search(searchQuery, 1, 10), HttpStatus.FOUND);
     }
 

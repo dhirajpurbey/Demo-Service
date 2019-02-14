@@ -26,16 +26,20 @@ public class GoogleApiSearchService {
     public SearchResultDoc search(SearchQuery searchQuery, int start, int numOfResults) {
 
 
-        System.out.println("++++++++++++++++++++++++++++++++++service method call");
+        // System.out.println("++++++++++++++++++++++++++++++++++service method call");
         //  System.out.println(apiKey);
         //  System.out.println(customSearchEngineKey);
         // System.out.println(searchURL);
+        String s1= searchQuery.getDomain();
+        String s2= searchQuery.getConcepts()[0];
+        System.out.println(s1);
+        System.out.println(s2);
         try {
 
             String toSearch = searchURL + "key=" + apiKey + "&cx="
                     + customSearchEngineKey + "&q=";
 
-         toSearch += searchQuery.getDomain()+" "+searchQuery.getConcepts();
+//            toSearch += s1 + " " + s2;
 
             toSearch += "&alt=json";
 
@@ -46,35 +50,31 @@ public class GoogleApiSearchService {
             System.out.println(toSearch);
 
             URL url = new URL(toSearch);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             StringBuffer buffer = new StringBuffer();
             while ((line = br.readLine()) != null) {
                 buffer.append(line);
             }
-           String result= buffer.toString();
-          // System.out.println(result);
-            com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
-            objectMapper.disable(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            GoogleResponse googleResponse = objectMapper.readValue(result, GoogleResponse.class);
-            System.out.println("googleResponse:" + googleResponse.getUrl().getTemplate());
+            String result = buffer.toString();
+            System.out.println(result);
 
-            SearchResultDoc searchResultDoc  = new SearchResultDoc();
+//            com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+//            objectMapper.disable(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//            GoogleResponse googleResponse = objectMapper.readValue(result, GoogleResponse.class);
+//            System.out.println("googleResponse:" + googleResponse);
+
+            SearchResultDoc searchResultDoc = new SearchResultDoc();
 
             searchResultDoc.setDomain(searchQuery.getDomain());
             searchResultDoc.setConcepts(searchQuery.getConcepts());
 
-
             return searchResultDoc;
 
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-   }
+          return null;
+    }
 }

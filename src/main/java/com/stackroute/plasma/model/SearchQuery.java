@@ -13,6 +13,6 @@ public class SearchQuery {
     private String id;
     // private Timestamp dateTime;
     private String domain;
-    private String[] concepts;
+    private String[] concepts = {"encapsulation","abstraction"};
 
 }
